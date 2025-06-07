@@ -17,11 +17,6 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-// Configurazione Firestore
-db.settings({
-    cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED
-});
-
 // Abilita la persistenza offline
 enableIndexedDbPersistence(db)
     .catch((err) => {
