@@ -78,7 +78,16 @@ export const router = {
 
         // Carica il template per le altre pagine
         try {
-            const templatePath = route.template.startsWith('/') ? route.template : `/myreparto/${route.template}`;
+            // Costruisci il percorso del template
+            let templatePath;
+            if (route.template.startsWith('/')) {
+                templatePath = route.template;
+            } else if (route.template.startsWith('views/')) {
+                templatePath = `/myreparto/${route.template}`;
+            } else {
+                templatePath = `/myreparto/views/${route.template}`;
+            }
+            
             console.log('Caricamento template:', templatePath);
             const response = await fetch(templatePath);
             if (!response.ok) {
