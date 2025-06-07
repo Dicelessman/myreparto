@@ -2,18 +2,18 @@
     "name": "MyReparto - Gestione Reparto Scout",
     "short_name": "MyReparto",
     "description": "Applicazione per la gestione del reparto scout",
-    "start_url": "/",
+    "start_url": "/myreparto/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#15803d",
     "icons": [
         {
-            "src": "/icons/icon-192x192.png",
+            "src": "/myreparto/icons/icon-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/icons/icon-512x512.png",
+            "src": "/myreparto/icons/icon-512x512.png",
             "sizes": "512x512",
             "type": "image/png"
         }
