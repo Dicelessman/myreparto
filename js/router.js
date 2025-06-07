@@ -1,10 +1,11 @@
 // Definizione delle rotte
 const routes = {
-    '/': {
-        template: '/views/dashboard.html',
-        auth: true,
-        roles: ['staff', 'esploratore']
-    },
+    '/': 'index.html',
+    '/index.html': 'index.html',
+    '/dashboard.html': 'dashboard.html',
+    '/myreparto/': 'dashboard.html',
+    '/myreparto/index.html': 'index.html',
+    '/myreparto/dashboard.html': 'dashboard.html',
     '/login': {
         template: '/views/login.html',
         auth: false

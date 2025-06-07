@@ -1,0 +1,16 @@
+{
+  "name": "myreparto",
+  "version": "1.0.0",
+  "description": "Applicazione per la gestione del reparto scout",
+  "scripts": {
+    "build": "tailwindcss -i ./css/input.css -o ./css/output.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1"
+  }
+} 
