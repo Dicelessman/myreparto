@@ -1,11 +1,11 @@
 // Definizione delle rotte
 const routes = {
     '/': {
-        template: 'index.html',
+        isHome: true,
         auth: false
     },
     '/index.html': {
-        template: 'index.html',
+        isHome: true,
         auth: false
     },
     '/dashboard': {
@@ -13,11 +13,11 @@ const routes = {
         auth: true
     },
     '/myreparto/': {
-        template: 'index.html',
+        isHome: true,
         auth: false
     },
     '/myreparto/index.html': {
-        template: 'index.html',
+        isHome: true,
         auth: false
     },
     '/myreparto/dashboard': {
@@ -58,7 +58,7 @@ export const router = {
             return;
         }
 
-        // Verifica autenticazione e ruoli per le rotte complesse
+        // Verifica autenticazione e ruoli
         if (route.auth && !state.isAuthenticated) {
             window.location.href = '/myreparto/login';
             return;
@@ -69,7 +69,14 @@ export const router = {
             return;
         }
 
-        // Carica il template
+        // Se è la pagina iniziale, non carichiamo nessun template
+        if (route.isHome) {
+            console.log('Pagina iniziale, nessun template da caricare');
+            window.history.pushState({}, '', path);
+            return;
+        }
+
+        // Carica il template per le altre pagine
         try {
             const templatePath = route.template.startsWith('/') ? route.template : `/myreparto/${route.template}`;
             console.log('Caricamento template:', templatePath);
@@ -78,14 +85,6 @@ export const router = {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const html = await response.text();
-            
-            // Se stiamo caricando index.html, non dobbiamo inserire il contenuto in #app
-            if (route.template === 'index.html') {
-                // Aggiorna solo l'URL
-                window.history.pushState({}, '', path);
-                return;
-            }
-            
             document.getElementById('app').innerHTML = html;
             
             // Aggiorna l'URL
