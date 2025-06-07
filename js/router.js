@@ -1,13 +1,25 @@
 // Definizione delle rotte
 const routes = {
-    '/': 'index.html',
-    '/index.html': 'index.html',
+    '/': {
+        template: 'index.html',
+        auth: false
+    },
+    '/index.html': {
+        template: 'index.html',
+        auth: false
+    },
     '/dashboard': {
         template: 'views/dashboard.html',
         auth: true
     },
-    '/myreparto/': 'index.html',
-    '/myreparto/index.html': 'index.html',
+    '/myreparto/': {
+        template: 'index.html',
+        auth: false
+    },
+    '/myreparto/index.html': {
+        template: 'index.html',
+        auth: false
+    },
     '/myreparto/dashboard': {
         template: 'views/dashboard.html',
         auth: true
@@ -46,26 +58,6 @@ export const router = {
             return;
         }
 
-        // Se la rotta è una stringa semplice, carica direttamente il file
-        if (typeof route === 'string') {
-            try {
-                const templatePath = route.startsWith('/') ? route : `/myreparto/${route}`;
-                console.log('Caricamento template:', templatePath);
-                const response = await fetch(templatePath);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const html = await response.text();
-                document.getElementById('app').innerHTML = html;
-                window.history.pushState({}, '', path);
-                return;
-            } catch (error) {
-                console.error('Errore nel caricamento della pagina:', error);
-                document.getElementById('app').innerHTML = '<div class="p-4 text-red-500">Errore nel caricamento della pagina</div>';
-                return;
-            }
-        }
-
         // Verifica autenticazione e ruoli per le rotte complesse
         if (route.auth && !state.isAuthenticated) {
             window.location.href = '/myreparto/login';
@@ -77,7 +69,7 @@ export const router = {
             return;
         }
 
-        // Carica il template per le rotte complesse
+        // Carica il template
         try {
             const templatePath = route.template.startsWith('/') ? route.template : `/myreparto/${route.template}`;
             console.log('Caricamento template:', templatePath);
@@ -86,6 +78,14 @@ export const router = {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const html = await response.text();
+            
+            // Se stiamo caricando index.html, non dobbiamo inserire il contenuto in #app
+            if (route.template === 'index.html') {
+                // Aggiorna solo l'URL
+                window.history.pushState({}, '', path);
+                return;
+            }
+            
             document.getElementById('app').innerHTML = html;
             
             // Aggiorna l'URL
@@ -109,11 +109,6 @@ export const router = {
         });
 
         if (!route) return null;
-
-        // Se la rotta è una stringa semplice, restituisci direttamente il valore
-        if (typeof routes[route[0]] === 'string') {
-            return routes[route[0]];
-        }
 
         // Per le rotte complesse, restituisci l'oggetto con i parametri
         return { 

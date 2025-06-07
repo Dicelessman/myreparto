@@ -41,7 +41,9 @@ async function initApp() {
         }
         
         // Naviga alla pagina corrente
-        router.navigate(window.location.pathname);
+        const currentPath = window.location.pathname;
+        console.log('Navigazione a:', currentPath);
+        await router.navigate(currentPath);
         hideLoading();
     });
 }
