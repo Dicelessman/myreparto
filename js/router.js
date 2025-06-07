@@ -9,7 +9,7 @@ const routes = {
         auth: false
     },
     '/dashboard': {
-        template: '/myreparto/views/dashboard.html',
+        template: '/myreparto/views/dashboard',
         auth: true
     },
     '/myreparto/': {
@@ -21,29 +21,29 @@ const routes = {
         auth: false
     },
     '/myreparto/dashboard': {
-        template: '/myreparto/views/dashboard.html',
+        template: '/myreparto/views/dashboard',
         auth: true
     },
     '/myreparto/login': {
-        template: '/myreparto/views/login.html',
+        template: '/myreparto/views/login',
         auth: false
     },
     '/myreparto/register': {
-        template: '/myreparto/views/register.html',
+        template: '/myreparto/views/register',
         auth: false
     },
     '/myreparto/esploratori': {
-        template: '/myreparto/views/esploratori.html',
+        template: '/myreparto/views/esploratori',
         auth: true,
         roles: ['staff']
     },
     '/myreparto/esploratore/:id': {
-        template: '/myreparto/views/esploratore-detail.html',
+        template: '/myreparto/views/esploratore-detail',
         auth: true,
         roles: ['staff', 'esploratore']
     },
     '/myreparto/profilo': {
-        template: '/myreparto/views/profilo.html',
+        template: '/myreparto/views/profilo',
         auth: true,
         roles: ['staff', 'esploratore']
     }
