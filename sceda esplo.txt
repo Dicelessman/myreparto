@@ -1,0 +1,111 @@
+Dati anagrafici
+- Nome (testo)
+- Cognome (testo)
+- Data di Nascita (data)
+- Codice Fiscale (testo)
+- Indirizzo (testo)
+- Città (testo)
+- Email (testo)
+- Telefono (numero)
+
+Contatti
+- Genitore 1 (testo)
+- Telefono (numero)
+- email (testo)
+- Genitore 2 (testo)
+- Telefono (numero)
+- email (testo)
+
+Informazioni Sanitarie
+- Gruppo Sanguigno (testo)
+- Intolleranze e Esigenze Alimentari (note)
+- Allergie (note)
+- Farmaci (note)
+- Vaccinazioni (note)
+- Certificazioni (note)
+- Altro (note)
+
+Progressione Verticale
+- Promessa (data)
+- VCP/CP (radiobutton)
+- Giglio/Trifoglio (data) (note)
+-Traccia 1 (data)
+--IO (label)
+---IO-1.1 (checkbutton) (data)
+---IO-1.2 (checkbutton) (data)
+---IO-1.3 (checkbutton) (data)
+---IO-1.4 (checkbutton) (data)
+--RE
+---RE-1.1 (checkbutton) (data)
+---RE-1.2 (checkbutton) (data)
+---RE-1.3 (checkbutton) (data)
+---RE-1.4 (checkbutton) (data)
+--IM
+---IM-1.1 (checkbutton) (data)
+---IM-1.2 (checkbutton) (data)
+---IM-1.3 (checkbutton) (data)
+---IM-1.4 (checkbutton) (data)
+-Traccia 2
+--IO 
+---IO-2.1 (checkbutton) (data)
+---IO-2.2 (checkbutton) (data)
+---IO-2.3 (checkbutton) (data)
+---IO-2.4 (checkbutton) (data)
+--RE
+---RE-2.1 (checkbutton) (data)
+---RE-2.2 (checkbutton) (data)
+---RE-2.3 (checkbutton) (data)
+---RE-2.4 (checkbutton) (data)
+--IM
+---IM-2.1 (checkbutton) (data)
+---IM-2.2 (checkbutton) (data)
+---IM-2.3 (checkbutton) (data)
+---IM-2.4 (checkbutton) (data)
+-Traccia 3
+--IO
+---IO-3.1 (checkbutton) (data) 
+---IO-3.2 (checkbutton) (data)
+---IO-3.3 (checkbutton) (data)
+---IO-3.4 (checkbutton) (data)
+--RE
+---RE-3.1 (checkbutton) (data)
+---RE-3.2 (checkbutton) (data)
+---RE-3.3 (checkbutton) (data)
+---RE-3.4 (checkbutton) (data)
+--IM
+---IM-3.1 (checkbutton) (data) 
+---IM-3.2 (checkbutton) (data)
+---IM-3.3 (checkbutton) (data)
+---IM-3.4 (checkbutton) (data)
+- Note (note)
+
+Specialità
+- Specialità (testo)
+-- Prova 1 (checkbutton) (data)
+-- Prova 2 (checkbutton) (data)
+-- Prova 3 (checkbutton) (data)
+-- Prova CR (note) (checkbutton) (data)
+-- Note
+
+Eventi
+- Campo Estivo 1 (data) (testo) 
+- Campo Estivo 2 (data) (testo)
+- Campo Estivo 3 (data) (testo)
+- Campo Estivo 4 (data) (testo)
+- CCP (data) (testo)
+- Tecnicamp 1 (data) (testo) (testo)
+- Tecnicamp 2 (data) (testo) (testo)
+- Tecnicamp 3 (data) (testo) (testo)
+- Tecnicamp 4 (data) (testo) (testo)
+- Jamboree (data) (testo)
+- Note (note)
+
+Documenti
+- Quota Annua 1 (data)
+- Quota Annua 2 (data)
+- Quota Annua 3 (data)
+- Quota Annua 4 (data)
+- Iscrizione (data)
+- Modulo sanitario (data)
+- Modulo Privacy (data)
+- Note (data)
