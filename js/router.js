@@ -46,7 +46,26 @@ export const router = {
             return;
         }
 
-        // Verifica autenticazione e ruoli
+        // Se la rotta è una stringa semplice, carica direttamente il file
+        if (typeof route === 'string') {
+            try {
+                const templatePath = `/myreparto/${route}`;
+                const response = await fetch(templatePath);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const html = await response.text();
+                document.getElementById('app').innerHTML = html;
+                window.history.pushState({}, '', path);
+                return;
+            } catch (error) {
+                console.error('Errore nel caricamento della pagina:', error);
+                document.getElementById('app').innerHTML = '<div class="p-4 text-red-500">Errore nel caricamento della pagina</div>';
+                return;
+            }
+        }
+
+        // Verifica autenticazione e ruoli per le rotte complesse
         if (route.auth && !state.isAuthenticated) {
             window.location.href = '/myreparto/login';
             return;
@@ -57,9 +76,9 @@ export const router = {
             return;
         }
 
-        // Carica il template
+        // Carica il template per le rotte complesse
         try {
-            const templatePath = route.template.startsWith('/') ? route.template : `/myreparto/${route.template}`;
+            const templatePath = `/myreparto/${route.template}`;
             const response = await fetch(templatePath);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
