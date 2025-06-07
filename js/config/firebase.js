@@ -1,3 +1,7 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
 // Configurazione Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyD2q76D357xcvi1F2ifMt1qAnqJyQv1tpA",
@@ -9,11 +13,9 @@ const firebaseConfig = {
 };
 
 // Inizializzazione Firebase
-firebase.initializeApp(firebaseConfig);
-
-// Esportazione delle istanze
-export const auth = firebase.auth();
-export const db = firebase.firestore();
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
 
 // Configurazione Firestore
 db.settings({
@@ -21,7 +23,7 @@ db.settings({
 });
 
 // Abilita la persistenza offline
-db.enablePersistence()
+enableIndexedDbPersistence(db)
     .catch((err) => {
         if (err.code === 'failed-precondition') {
             console.warn('La persistenza offline non è disponibile con più tab aperti');

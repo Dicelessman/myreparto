@@ -2,10 +2,16 @@
 const routes = {
     '/': 'index.html',
     '/index.html': 'index.html',
-    '/dashboard.html': 'dashboard.html',
-    '/myreparto/': 'dashboard.html',
+    '/dashboard': {
+        template: '/views/dashboard.html',
+        auth: true
+    },
+    '/myreparto/': 'index.html',
     '/myreparto/index.html': 'index.html',
-    '/myreparto/dashboard.html': 'dashboard.html',
+    '/myreparto/dashboard': {
+        template: '/views/dashboard.html',
+        auth: true
+    },
     '/login': {
         template: '/views/login.html',
         auth: false
