@@ -35,21 +35,27 @@ export const router = {
     async navigate(path) {
         const route = this.matchRoute(path);
         if (!route) {
-            return this.navigate('/404');
+            console.error('Rotta non trovata:', path);
+            return;
         }
 
         // Verifica autenticazione e ruoli
         if (route.auth && !state.isAuthenticated) {
-            return this.navigate('/login');
+            window.location.href = '/login';
+            return;
         }
 
         if (route.roles && !route.roles.includes(state.userRole)) {
-            return this.navigate('/unauthorized');
+            window.location.href = '/unauthorized';
+            return;
         }
 
         // Carica il template
         try {
             const response = await fetch(route.template);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const html = await response.text();
             document.getElementById('app').innerHTML = html;
             
@@ -62,7 +68,7 @@ export const router = {
             }
         } catch (error) {
             console.error('Errore nel caricamento della pagina:', error);
-            this.navigate('/error');
+            document.getElementById('app').innerHTML = '<div class="p-4 text-red-500">Errore nel caricamento della pagina</div>';
         }
     },
 
