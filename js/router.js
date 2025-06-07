@@ -52,19 +52,23 @@ const routes = {
 // Router
 export const router = {
     async navigate(path) {
+        console.log('Navigazione richiesta a:', path);
         const route = this.matchRoute(path);
         if (!route) {
             console.error('Rotta non trovata:', path);
             return;
         }
+        console.log('Rotta trovata:', route);
 
         // Verifica autenticazione e ruoli
         if (route.auth && !state.isAuthenticated) {
+            console.log('Reindirizzamento al login - utente non autenticato');
             window.location.href = '/myreparto/login';
             return;
         }
 
         if (route.roles && !route.roles.includes(state.userRole)) {
+            console.log('Reindirizzamento a unauthorized - ruolo non autorizzato');
             window.location.href = '/myreparto/unauthorized';
             return;
         }
@@ -88,12 +92,14 @@ export const router = {
                 templatePath = `/myreparto/views/${route.template}`;
             }
             
-            console.log('Caricamento template:', templatePath);
+            console.log('Tentativo di caricamento template:', templatePath);
             const response = await fetch(templatePath);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const html = await response.text();
+            console.log('Template caricato con successo');
+            
             document.getElementById('app').innerHTML = html;
             
             // Aggiorna l'URL
@@ -105,19 +111,34 @@ export const router = {
             }
         } catch (error) {
             console.error('Errore nel caricamento della pagina:', error);
-            document.getElementById('app').innerHTML = '<div class="p-4 text-red-500">Errore nel caricamento della pagina</div>';
+            document.getElementById('app').innerHTML = `
+                <div class="p-4 text-red-500">
+                    <h2 class="text-xl font-bold mb-2">Errore nel caricamento della pagina</h2>
+                    <p>${error.message}</p>
+                    <a href="/myreparto/" class="text-green-600 hover:text-green-700 mt-4 inline-block">
+                        <i class="fas fa-home mr-2"></i>Torna alla home
+                    </a>
+                </div>
+            `;
         }
     },
 
     matchRoute(path) {
+        console.log('Ricerca rotta per il percorso:', path);
         // Gestione dei parametri nelle rotte
         const route = Object.entries(routes).find(([routePath]) => {
             const pattern = routePath.replace(/:[^/]+/g, '[^/]+');
-            return new RegExp(`^${pattern}$`).test(path);
+            const matches = new RegExp(`^${pattern}$`).test(path);
+            console.log(`Confronto percorso ${path} con pattern ${pattern}: ${matches}`);
+            return matches;
         });
 
-        if (!route) return null;
+        if (!route) {
+            console.log('Nessuna rotta trovata per:', path);
+            return null;
+        }
 
+        console.log('Rotta trovata:', route[0]);
         // Per le rotte complesse, restituisci l'oggetto con i parametri
         return { 
             ...routes[route[0]], 
