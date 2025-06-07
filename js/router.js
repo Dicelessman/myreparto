@@ -12,25 +12,25 @@ const routes = {
         template: 'views/dashboard.html',
         auth: true
     },
-    '/login': {
+    '/myreparto/login': {
         template: 'views/login.html',
         auth: false
     },
-    '/register': {
+    '/myreparto/register': {
         template: 'views/register.html',
         auth: false
     },
-    '/esploratori': {
+    '/myreparto/esploratori': {
         template: 'views/esploratori.html',
         auth: true,
         roles: ['staff']
     },
-    '/esploratore/:id': {
+    '/myreparto/esploratore/:id': {
         template: 'views/esploratore-detail.html',
         auth: true,
         roles: ['staff', 'esploratore']
     },
-    '/profilo': {
+    '/myreparto/profilo': {
         template: 'views/profilo.html',
         auth: true,
         roles: ['staff', 'esploratore']
@@ -106,7 +106,18 @@ export const router = {
             return new RegExp(`^${pattern}$`).test(path);
         });
 
-        return route ? { ...routes[route[0]], params: this.extractParams(route[0], path) } : null;
+        if (!route) return null;
+
+        // Se la rotta è una stringa semplice, restituisci direttamente il valore
+        if (typeof routes[route[0]] === 'string') {
+            return routes[route[0]];
+        }
+
+        // Per le rotte complesse, restituisci l'oggetto con i parametri
+        return { 
+            ...routes[route[0]], 
+            params: this.extractParams(route[0], path) 
+        };
     },
 
     extractParams(routePath, currentPath) {
