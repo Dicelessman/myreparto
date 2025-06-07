@@ -1,12 +1,11 @@
 // Configurazione Firebase
 const firebaseConfig = {
-    // TODO: Inserire qui le credenziali Firebase
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyD2q76D357xcvi1F2ifMt1qAnqJyQv1tpA",
+    authDomain: "myreparto-6fa59.firebaseapp.com",
+    projectId: "myreparto-6fa59",
+    storageBucket: "myreparto-6fa59.firebasestorage.app",
+    messagingSenderId: "366632707549",
+    appId: "1:366632707549:web:1e103de89a17cc62178234"
 };
 
 // Inizializzazione Firebase
