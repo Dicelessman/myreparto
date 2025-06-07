@@ -13,24 +13,28 @@
                 <div>
                     <label for="displayName" class="sr-only">Nome e Cognome</label>
                     <input id="displayName" name="displayName" type="text" required 
+                           autocomplete="name"
                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" 
                            placeholder="Nome e Cognome">
                 </div>
                 <div>
                     <label for="email" class="sr-only">Email</label>
                     <input id="email" name="email" type="email" required 
+                           autocomplete="email"
                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" 
                            placeholder="Email">
                 </div>
                 <div>
                     <label for="password" class="sr-only">Password</label>
                     <input id="password" name="password" type="password" required 
+                           autocomplete="new-password"
                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" 
                            placeholder="Password">
                 </div>
                 <div>
                     <label for="confirmPassword" class="sr-only">Conferma Password</label>
                     <input id="confirmPassword" name="confirmPassword" type="password" required 
+                           autocomplete="new-password"
                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" 
                            placeholder="Conferma Password">
                 </div>
@@ -61,8 +65,8 @@
 </div>
 
 <script type="module">
-    import { auth, db } from '../js/config/firebase.js';
-    import { showToast } from '../js/utils/ui.js';
+    import { auth, db } from '/myreparto/js/config/firebase.js';
+    import { showToast } from '/myreparto/js/utils/ui.js';
 
     const registerForm = document.getElementById('registerForm');
     
