@@ -30,7 +30,7 @@ async function initApp() {
                 if (!userData.isApproved) {
                     await auth.signOut();
                     showToast('Il tuo account è in attesa di approvazione', 'warning');
-                    router.navigate('/login');
+                    router.navigate('/myreparto/login');
                     return;
                 }
             }

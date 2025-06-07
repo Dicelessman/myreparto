@@ -3,35 +3,35 @@ const routes = {
     '/': 'index.html',
     '/index.html': 'index.html',
     '/dashboard': {
-        template: '/views/dashboard.html',
+        template: 'views/dashboard.html',
         auth: true
     },
     '/myreparto/': 'index.html',
     '/myreparto/index.html': 'index.html',
     '/myreparto/dashboard': {
-        template: '/views/dashboard.html',
+        template: 'views/dashboard.html',
         auth: true
     },
     '/login': {
-        template: '/views/login.html',
+        template: 'views/login.html',
         auth: false
     },
     '/register': {
-        template: '/views/register.html',
+        template: 'views/register.html',
         auth: false
     },
     '/esploratori': {
-        template: '/views/esploratori.html',
+        template: 'views/esploratori.html',
         auth: true,
         roles: ['staff']
     },
     '/esploratore/:id': {
-        template: '/views/esploratore-detail.html',
+        template: 'views/esploratore-detail.html',
         auth: true,
         roles: ['staff', 'esploratore']
     },
     '/profilo': {
-        template: '/views/profilo.html',
+        template: 'views/profilo.html',
         auth: true,
         roles: ['staff', 'esploratore']
     }
@@ -48,18 +48,19 @@ export const router = {
 
         // Verifica autenticazione e ruoli
         if (route.auth && !state.isAuthenticated) {
-            window.location.href = '/login';
+            window.location.href = '/myreparto/login';
             return;
         }
 
         if (route.roles && !route.roles.includes(state.userRole)) {
-            window.location.href = '/unauthorized';
+            window.location.href = '/myreparto/unauthorized';
             return;
         }
 
         // Carica il template
         try {
-            const response = await fetch(route.template);
+            const templatePath = route.template.startsWith('/') ? route.template : `/myreparto/${route.template}`;
+            const response = await fetch(templatePath);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
