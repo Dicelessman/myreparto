@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Elenco Esploratori</h1>
+    
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold">Esploratori del Reparto</h2>
+            <button id="addEsploratore" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                <i class="fas fa-plus mr-2"></i>Nuovo Esploratore
+            </button>
+        </div>
+
+        <div id="esploratoriList" class="space-y-4">
+            <!-- La lista degli esploratori verrà caricata dinamicamente -->
+            <div class="text-center text-gray-500">
+                Caricamento esploratori...
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { db } from '../js/config/firebase.js';
+    import { collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+    // Carica la lista degli esploratori
+    async function loadEsploratori() {
+        const esploratoriList = document.getElementById('esploratoriList');
+        try {
+            const querySnapshot = await getDocs(collection(db, 'esploratori'));
+            esploratoriList.innerHTML = '';
+            
+            querySnapshot.forEach((doc) => {
+                const esploratore = doc.data();
+                const card = document.createElement('div');
+                card.className = 'bg-gray-50 p-4 rounded-lg hover:bg-gray-100 transition-colors';
+                card.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-semibold">${esploratore.nome} ${esploratore.cognome}</h3>
+                            <p class="text-gray-600">${esploratore.patrol || 'Senza pattuglia'}</p>
+                        </div>
+                        <a href="/myreparto/esploratore/${doc.id}" class="text-green-600 hover:text-green-700">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                `;
+                esploratoriList.appendChild(card);
+            });
+
+            if (querySnapshot.empty) {
+                esploratoriList.innerHTML = `
+                    <div class="text-center text-gray-500">
+                        Nessun esploratore trovato
+                    </div>
+                `;
+            }
+        } catch (error) {
+            console.error('Errore nel caricamento degli esploratori:', error);
+            esploratoriList.innerHTML = `
+                <div class="text-center text-red-500">
+                    Errore nel caricamento degli esploratori
+                </div>
+            `;
+        }
+    }
+
+    // Carica gli esploratori quando la pagina è pronta
+    document.addEventListener('DOMContentLoaded', loadEsploratori);
+
+    // Gestione del pulsante "Nuovo Esploratore"
+    document.getElementById('addEsploratore').addEventListener('click', () => {
+        // TODO: Implementare la creazione di un nuovo esploratore
+        console.log('Aggiungi nuovo esploratore');
+    });
+</script> 

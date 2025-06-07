@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-6">
+        <a href="/myreparto/esploratori" class="text-green-600 hover:text-green-700">
+            <i class="fas fa-arrow-left mr-2"></i>Torna alla lista
+        </a>
+    </div>
+
+    <div id="esploratoreDetail" class="bg-white rounded-lg shadow-md p-6">
+        <div class="text-center text-gray-500">
+            Caricamento dettagli esploratore...
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { db } from '../js/config/firebase.js';
+    import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+    // Carica i dettagli dell'esploratore
+    async function loadEsploratoreDetail() {
+        const esploratoreDetail = document.getElementById('esploratoreDetail');
+        const esploratoreId = window.location.pathname.split('/').pop();
+
+        try {
+            const docRef = doc(db, 'esploratori', esploratoreId);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const esploratore = docSnap.data();
+                esploratoreDetail.innerHTML = `
+                    <div class="space-y-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h1 class="text-3xl font-bold">${esploratore.nome} ${esploratore.cognome}</h1>
+                                <p class="text-gray-600">${esploratore.patrol || 'Senza pattuglia'}</p>
+                            </div>
+                            <button id="editEsploratore" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                                <i class="fas fa-edit mr-2"></i>Modifica
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h2 class="text-xl font-semibold mb-4">Informazioni Personali</h2>
+                                <div class="space-y-2">
+                                    <p><span class="font-medium">Data di nascita:</span> ${esploratore.dataNascita || 'Non specificata'}</p>
+                                    <p><span class="font-medium">Email:</span> ${esploratore.email || 'Non specificata'}</p>
+                                    <p><span class="font-medium">Telefono:</span> ${esploratore.telefono || 'Non specificato'}</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h2 class="text-xl font-semibold mb-4">Informazioni Scout</h2>
+                                <div class="space-y-2">
+                                    <p><span class="font-medium">Pattuglia:</span> ${esploratore.patrol || 'Non assegnata'}</p>
+                                    <p><span class="font-medium">Ruolo:</span> ${esploratore.ruolo || 'Esploratore'}</p>
+                                    <p><span class="font-medium">Data ingresso:</span> ${esploratore.dataIngresso || 'Non specificata'}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Gestione del pulsante "Modifica"
+                document.getElementById('editEsploratore').addEventListener('click', () => {
+                    // TODO: Implementare la modifica dell'esploratore
+                    console.log('Modifica esploratore');
+                });
+            } else {
+                esploratoreDetail.innerHTML = `
+                    <div class="text-center text-red-500">
+                        Esploratore non trovato
+                    </div>
+                `;
+            }
+        } catch (error) {
+            console.error('Errore nel caricamento dei dettagli:', error);
+            esploratoreDetail.innerHTML = `
+                <div class="text-center text-red-500">
+                    Errore nel caricamento dei dettagli
+                </div>
+            `;
+        }
+    }
+
+    // Carica i dettagli quando la pagina è pronta
+    document.addEventListener('DOMContentLoaded', loadEsploratoreDetail);
+</script> 

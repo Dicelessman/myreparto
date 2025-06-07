@@ -49,7 +49,8 @@ export const router = {
         // Se la rotta è una stringa semplice, carica direttamente il file
         if (typeof route === 'string') {
             try {
-                const templatePath = `/myreparto/${route}`;
+                const templatePath = route.startsWith('/') ? route : `/myreparto/${route}`;
+                console.log('Caricamento template:', templatePath);
                 const response = await fetch(templatePath);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -78,7 +79,8 @@ export const router = {
 
         // Carica il template per le rotte complesse
         try {
-            const templatePath = `/myreparto/${route.template}`;
+            const templatePath = route.template.startsWith('/') ? route.template : `/myreparto/${route.template}`;
+            console.log('Caricamento template:', templatePath);
             const response = await fetch(templatePath);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
