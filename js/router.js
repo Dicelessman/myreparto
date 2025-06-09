@@ -86,8 +86,9 @@ class Router {
         }
 
         // Cerca una corrispondenza esatta
-        if (this.routes[`/${normalizedPath}`]) {
-            return this.routes[`/${normalizedPath}`];
+        const exactPath = `/${normalizedPath}`;
+        if (this.routes[exactPath]) {
+            return this.routes[exactPath];
         }
 
         // Cerca corrispondenze con parametri
