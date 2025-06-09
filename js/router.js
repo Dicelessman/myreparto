@@ -77,32 +77,34 @@ class Router {
 
         // Gestione speciale per la rotta principale
         if (normalizedPath === '' || normalizedPath === 'myreparto') {
-            const homeRoute = this.routes.find(route => this.normalizePath(route.path) === 'myreparto');
-            if (homeRoute) {
-                console.log('✅ Rotta principale trovata');
-                return homeRoute;
-            }
+            return this.routes[BASE_PATH];
         }
 
-        for (const route of this.routes) {
-            const pattern = this.normalizePath(route.path);
+        // Cerca una corrispondenza esatta
+        if (this.routes[`/${normalizedPath}`]) {
+            return this.routes[`/${normalizedPath}`];
+        }
+
+        // Cerca corrispondenze con parametri
+        for (const [routePath, routeConfig] of Object.entries(this.routes)) {
+            const pattern = this.normalizePath(routePath);
             console.log('Confronto:', normalizedPath, 'con pattern', pattern);
 
             // Converti il pattern in regex
             const regexPattern = pattern
-                .replace(/:[^/]+/g, '[^/]+') // Sostituisci i parametri con regex
-                .replace(/\//g, '\\/'); // Escape forward slash
+                .replace(/:[^/]+/g, '[^/]+')
+                .replace(/\//g, '\\/');
 
             const regex = new RegExp(`^${regexPattern}$`);
             if (regex.test(normalizedPath)) {
                 console.log('✅ Rotta trovata:', pattern);
-                return route;
+                return routeConfig;
             }
         }
 
         // Rotta di fallback - reindirizza alla home
         console.log('⚠️ Nessuna rotta trovata, reindirizzamento alla home');
-        return this.routes.find(route => this.normalizePath(route.path) === 'myreparto');
+        return this.routes[BASE_PATH];
     }
 
     async handleRoute() {
