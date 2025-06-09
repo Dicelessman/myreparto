@@ -1,18 +1,19 @@
 const CACHE_NAME = 'myreparto-v2';
 const BASE_PATH = '/myreparto';
+const BASE_URL = 'https://dicelessman.github.io';
 
 // Risorse statiche da precaricare
 const STATIC_RESOURCES = [
-  `${BASE_PATH}/`,
-  `${BASE_PATH}/index.html`,
-  `${BASE_PATH}/register.html`,
-  `${BASE_PATH}/css/output.css`,
-  `${BASE_PATH}/js/app.js`,
-  `${BASE_PATH}/js/config/firebase.js`,
-  `${BASE_PATH}/js/utils/ui.js`,
-  `${BASE_PATH}/manifest.json`,
-  `${BASE_PATH}/icons/icon-192x192.png`,
-  `${BASE_PATH}/icons/icon-512x512.png`
+  `${BASE_URL}${BASE_PATH}/`,
+  `${BASE_URL}${BASE_PATH}/index.html`,
+  `${BASE_URL}${BASE_PATH}/register.html`,
+  `${BASE_URL}${BASE_PATH}/css/output.css`,
+  `${BASE_URL}${BASE_PATH}/js/app.js`,
+  `${BASE_URL}${BASE_PATH}/js/config/firebase.js`,
+  `${BASE_URL}${BASE_PATH}/js/utils/ui.js`,
+  `${BASE_URL}${BASE_PATH}/manifest.json`,
+  `${BASE_URL}${BASE_PATH}/icons/icon-192x192.png`,
+  `${BASE_URL}${BASE_PATH}/icons/icon-512x512.png`
 ];
 
 // Strategie di caching
