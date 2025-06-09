@@ -90,6 +90,7 @@
     <script type="module" src="js/app.js"></script>
     <script type="module">
         import { auth, db } from './js/config/firebase.js';
+        import { createUserWithEmailAndPassword, updateProfile } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
         import { showToast } from './js/utils/ui.js';
 
         // Funzione di inizializzazione
@@ -143,12 +144,12 @@
             try {
                 console.log('Creazione utente in Firebase...');
                 // Creazione utente in Firebase Auth
-                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 console.log('Utente creato:', user.uid);
 
                 // Aggiornamento del profilo
-                await user.updateProfile({
+                await updateProfile(user, {
                     displayName: displayName
                 });
                 console.log('Profilo aggiornato');
