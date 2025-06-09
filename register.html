@@ -66,27 +66,42 @@
         </div>
     </div>
 
-    <script type="module" src="js/app.js"></script>
-    <script type="module" src="js/auth/register.js"></script>
     <script type="module">
-        import { auth, db } from './js/config/firebase.js';
-        import { createUserWithEmailAndPassword, updateProfile } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
-        import { showToast } from './js/utils/ui.js';
+        console.log('Caricamento script di registrazione...');
 
-        console.log('Inizializzazione script di registrazione...');
+        try {
+            const { auth, db } = await import('./js/config/firebase.js');
+            const { createUserWithEmailAndPassword, updateProfile } = await import('https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js');
+            const { showToast } = await import('./js/utils/ui.js');
 
-        const registerForm = document.getElementById('registerForm');
-        const registerButton = document.getElementById('registerButton');
+            console.log('Moduli caricati con successo');
 
-        if (!registerForm || !registerButton) {
-            console.error('Elementi del form non trovati!');
-        } else {
-            console.log('Form e pulsante trovati, aggiungo event listener...');
-            
-            registerButton.addEventListener('click', async (e) => {
+            function initRegistration() {
+                console.log('Inizializzazione script di registrazione...');
+                
+                const registerForm = document.getElementById('registerForm');
+                const registerButton = document.getElementById('registerButton');
+                
+                if (!registerForm || !registerButton) {
+                    console.error('Elementi del form non trovati!');
+                    return;
+                }
+
+                console.log('Form e pulsante trovati, aggiungo event listener...');
+                
+                // Rimuovi eventuali listener precedenti
+                registerButton.removeEventListener('click', handleRegister);
+                
+                // Aggiungi il nuovo listener
+                registerButton.addEventListener('click', handleRegister);
+                
+                console.log('Event listener aggiunto con successo');
+            }
+
+            async function handleRegister(e) {
                 e.preventDefault();
                 console.log('Tentativo di registrazione...');
-
+                
                 const displayName = document.getElementById('displayName').value;
                 const email = document.getElementById('email').value;
                 const password = document.getElementById('password').value;
@@ -99,10 +114,11 @@
                     return;
                 }
 
-                try {
-                    registerButton.disabled = true;
-                    registerButton.textContent = 'Registrazione in corso...';
+                const registerButton = document.getElementById('registerButton');
+                registerButton.disabled = true;
+                registerButton.textContent = 'Registrazione in corso...';
 
+                try {
                     console.log('Creazione utente in Firebase...');
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     const user = userCredential.user;
@@ -150,9 +166,20 @@
                     registerButton.disabled = false;
                     registerButton.textContent = 'Registrati';
                 }
-            });
+            }
 
-            console.log('Event listener aggiunto con successo');
+            // Inizializza quando il DOM è caricato
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initRegistration);
+            } else {
+                initRegistration();
+            }
+
+            // Inizializza anche quando il template viene caricato
+            document.addEventListener('templateLoaded', initRegistration);
+
+        } catch (error) {
+            console.error('Errore durante il caricamento dei moduli:', error);
         }
     </script>
 </body>
