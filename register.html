@@ -191,6 +191,9 @@
         } else {
             initRegistration();
         }
+
+        // Inizializza anche quando il template viene caricato
+        document.addEventListener('templateLoaded', initRegistration);
     </script>
 
     <!-- Service Worker Registration -->

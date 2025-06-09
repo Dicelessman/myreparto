@@ -159,6 +159,9 @@ class Router {
             // Aggiorna lo stato corrente
             this.currentRoute = route;
 
+            // Emetti l'evento templateLoaded
+            document.dispatchEvent(new Event('templateLoaded'));
+
             console.log('=== FINE NAVIGAZIONE ===');
         } catch (error) {
             console.error('Errore durante il caricamento del template:', error);
