@@ -5,11 +5,13 @@ const BASE_PATH = '/myreparto';
 const routes = {
     [BASE_PATH]: {
         isHome: true,
-        auth: false
+        auth: false,
+        template: `${BASE_PATH}/index.html`
     },
     [`${BASE_PATH}/index.html`]: {
         isHome: true,
-        auth: false
+        auth: false,
+        template: `${BASE_PATH}/index.html`
     },
     [`${BASE_PATH}/dashboard`]: {
         template: `${BASE_PATH}/views/dashboard.html`,
@@ -57,6 +59,9 @@ class Router {
                 this.navigate(e.target.getAttribute('href'));
             }
         });
+
+        // Inizializza la prima navigazione
+        this.handleRoute();
     }
 
     // Funzione per normalizzare il percorso
