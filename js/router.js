@@ -59,21 +59,28 @@ class Router {
         });
     }
 
+    // Funzione per normalizzare il percorso
+    normalizePath(path) {
+        // Rimuovi trailing slash e leading slash
+        return path.replace(/^\/|\/$/g, '');
+    }
+
     // Funzione per matchare il percorso con le rotte disponibili
     matchRoute(path) {
         console.log('Match Route Debug');
         console.log('Percorso da matchare:', path);
         console.log('Rotte disponibili:', this.routes);
 
-        // Rimuovi trailing slash per consistenza
-        path = path.replace(/\/$/, '');
+        // Normalizza il percorso
+        const normalizedPath = this.normalizePath(path);
+        console.log('Percorso normalizzato:', normalizedPath);
 
         for (const route of this.routes) {
-            const pattern = route.path;
-            console.log('Confronto:', path, 'con pattern', pattern);
+            const pattern = this.normalizePath(route.path);
+            console.log('Confronto:', normalizedPath, 'con pattern', pattern);
 
             // Gestione speciale per la rotta principale
-            if (pattern === '/myreparto' && (path === '/myreparto' || path === '/myreparto/')) {
+            if (pattern === 'myreparto' && (normalizedPath === 'myreparto' || normalizedPath === '')) {
                 console.log('✅ Rotta principale trovata');
                 return route;
             }
@@ -84,7 +91,7 @@ class Router {
                 .replace(/\//g, '\\/'); // Escape forward slash
 
             const regex = new RegExp(`^${regexPattern}$`);
-            if (regex.test(path)) {
+            if (regex.test(normalizedPath)) {
                 console.log('✅ Rotta trovata:', pattern);
                 return route;
             }
