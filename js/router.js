@@ -20,7 +20,7 @@ const routes = {
         auth: false
     },
     [`${BASE_PATH}/register`]: {
-        template: '/views/register.html',
+        template: '/register.html',
         auth: false
     },
     [`${BASE_PATH}/esploratori`]: {
