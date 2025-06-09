@@ -75,15 +75,18 @@ class Router {
         const normalizedPath = this.normalizePath(path);
         console.log('Percorso normalizzato:', normalizedPath);
 
+        // Gestione speciale per la rotta principale
+        if (normalizedPath === '' || normalizedPath === 'myreparto') {
+            const homeRoute = this.routes.find(route => this.normalizePath(route.path) === 'myreparto');
+            if (homeRoute) {
+                console.log('✅ Rotta principale trovata');
+                return homeRoute;
+            }
+        }
+
         for (const route of this.routes) {
             const pattern = this.normalizePath(route.path);
             console.log('Confronto:', normalizedPath, 'con pattern', pattern);
-
-            // Gestione speciale per la rotta principale
-            if (pattern === 'myreparto' && (normalizedPath === 'myreparto' || normalizedPath === '')) {
-                console.log('✅ Rotta principale trovata');
-                return route;
-            }
 
             // Converti il pattern in regex
             const regexPattern = pattern
@@ -97,8 +100,9 @@ class Router {
             }
         }
 
-        console.log('❌ Nessuna rotta trovata');
-        return null;
+        // Rotta di fallback - reindirizza alla home
+        console.log('⚠️ Nessuna rotta trovata, reindirizzamento alla home');
+        return this.routes.find(route => this.normalizePath(route.path) === 'myreparto');
     }
 
     async handleRoute() {
@@ -115,6 +119,8 @@ class Router {
         if (!route) {
             console.log('❌ ROTTA NON TROVATA');
             console.log('Rotte disponibili:', this.routes);
+            // Reindirizza alla home
+            this.navigate('/myreparto');
             return;
         }
 
@@ -156,6 +162,8 @@ class Router {
             console.log('=== FINE NAVIGAZIONE ===');
         } catch (error) {
             console.error('Errore durante il caricamento del template:', error);
+            // In caso di errore, reindirizza alla home
+            this.navigate('/myreparto');
         }
     }
 
