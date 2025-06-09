@@ -125,6 +125,7 @@ self.addEventListener('activate', event => {
 // Intercettazione delle richieste
 self.addEventListener('fetch', event => {
   const request = event.request;
+  const url = new URL(request.url);
   
   // Ignora le richieste non GET
   if (request.method !== 'GET') {
@@ -133,6 +134,11 @@ self.addEventListener('fetch', event => {
 
   // Ignora le richieste a chrome-extension
   if (request.url.startsWith('chrome-extension://')) {
+    return;
+  }
+
+  // Verifica che la richiesta sia nel nostro scope
+  if (!url.pathname.startsWith(BASE_PATH)) {
     return;
   }
 
