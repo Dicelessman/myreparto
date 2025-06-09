@@ -43,11 +43,11 @@ const routes = {
 };
 
 class Router {
-    constructor(routes) {
+    constructor() {
         this.routes = routes;
         this.currentRoute = null;
         this.baseUrl = 'https://dicelessman.github.io';
-        this.basePath = '/myreparto';
+        this.basePath = BASE_PATH;
         
         // Gestione della navigazione
         window.addEventListener('popstate', () => this.handleRoute());
