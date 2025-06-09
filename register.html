@@ -28,7 +28,7 @@
                         Crea il tuo account staff per MyReparto
                     </p>
                 </div>
-                <form id="registerForm" class="mt-8 space-y-6">
+                <form id="registerForm" class="mt-8 space-y-6" onsubmit="return false;">
                     <div class="rounded-md shadow-sm -space-y-px">
                         <div>
                             <label for="displayName" class="sr-only">Nome e Cognome</label>
@@ -96,11 +96,14 @@
         
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            console.log('Tentativo di registrazione...');
             
             const displayName = document.getElementById('displayName').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
+
+            console.log('Dati form:', { displayName, email });
 
             // Validazione password
             if (password !== confirmPassword) {
@@ -109,14 +112,17 @@
             }
 
             try {
+                console.log('Creazione utente in Firebase...');
                 // Creazione utente in Firebase Auth
                 const userCredential = await auth.createUserWithEmailAndPassword(email, password);
                 const user = userCredential.user;
+                console.log('Utente creato:', user.uid);
 
                 // Aggiornamento del profilo
                 await user.updateProfile({
                     displayName: displayName
                 });
+                console.log('Profilo aggiornato');
 
                 // Creazione documento utente in Firestore
                 await db.collection('users').doc(user.uid).set({
@@ -126,6 +132,7 @@
                     createdAt: new Date(),
                     isApproved: true // Il primo utente è automaticamente approvato
                 });
+                console.log('Documento utente creato in Firestore');
 
                 showToast('Registrazione completata con successo', 'success');
                 
