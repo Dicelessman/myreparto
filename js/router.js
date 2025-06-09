@@ -1,49 +1,40 @@
+// Definizione del base path
+const BASE_PATH = '/myreparto';
+
 // Definizione delle rotte
 const routes = {
-    '/': {
+    [BASE_PATH]: {
         isHome: true,
         auth: false
     },
-    '/index.html': {
+    [`${BASE_PATH}/index.html`]: {
         isHome: true,
         auth: false
     },
-    '/dashboard': {
-        template: '/myreparto/views/dashboard',
+    [`${BASE_PATH}/dashboard`]: {
+        template: '/views/dashboard',
         auth: true
     },
-    '/myreparto/': {
-        isHome: true,
+    [`${BASE_PATH}/login`]: {
+        template: '/views/login',
         auth: false
     },
-    '/myreparto/index.html': {
-        isHome: true,
+    [`${BASE_PATH}/register`]: {
+        template: '/views/register',
         auth: false
     },
-    '/myreparto/dashboard': {
-        template: '/myreparto/views/dashboard',
-        auth: true
-    },
-    '/myreparto/login': {
-        template: '/myreparto/views/login',
-        auth: false
-    },
-    '/myreparto/register': {
-        template: '/myreparto/views/register',
-        auth: false
-    },
-    '/myreparto/esploratori': {
-        template: '/myreparto/views/esploratori',
+    [`${BASE_PATH}/esploratori`]: {
+        template: '/views/esploratori',
         auth: true,
         roles: ['staff']
     },
-    '/myreparto/esploratore/:id': {
-        template: '/myreparto/views/esploratore-detail',
+    [`${BASE_PATH}/esploratore/:id`]: {
+        template: '/views/esploratore-detail',
         auth: true,
         roles: ['staff', 'esploratore']
     },
-    '/myreparto/profilo': {
-        template: '/myreparto/views/profilo',
+    [`${BASE_PATH}/profilo`]: {
+        template: '/views/profilo',
         auth: true,
         roles: ['staff', 'esploratore']
     }
@@ -72,14 +63,14 @@ export const router = {
         if (route.auth && !state.isAuthenticated) {
             console.log('⚠️ Reindirizzamento al login - utente non autenticato');
             console.groupEnd();
-            window.location.href = '/myreparto/login';
+            window.location.href = `${BASE_PATH}/login`;
             return;
         }
 
         if (route.roles && !route.roles.includes(state.userRole)) {
             console.log('⚠️ Reindirizzamento a unauthorized - ruolo non autorizzato');
             console.groupEnd();
-            window.location.href = '/myreparto/unauthorized';
+            window.location.href = `${BASE_PATH}/unauthorized`;
             return;
         }
 
