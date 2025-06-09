@@ -89,17 +89,29 @@
     <script type="module" src="js/config/firebase.js"></script>
     <script type="module" src="js/app.js"></script>
     <script type="module">
-        import { registerManager } from './js/auth/register.js';
+        console.log('Caricamento modulo di registrazione...');
+        
+        try {
+            const { registerManager } = await import('./js/auth/register.js');
+            console.log('Modulo di registrazione caricato con successo');
+            
+            function initRegistration() {
+                console.log('Tentativo di inizializzazione RegisterManager...');
+                registerManager.init();
+            }
 
-        // Inizializza quando il DOM è caricato
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => registerManager.init());
-        } else {
-            registerManager.init();
+            // Inizializza quando il DOM è caricato
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initRegistration);
+            } else {
+                initRegistration();
+            }
+
+            // Inizializza anche quando il template viene caricato
+            document.addEventListener('templateLoaded', initRegistration);
+        } catch (error) {
+            console.error('Errore durante il caricamento del modulo di registrazione:', error);
         }
-
-        // Inizializza anche quando il template viene caricato
-        document.addEventListener('templateLoaded', () => registerManager.init());
     </script>
 
     <!-- Service Worker Registration -->
