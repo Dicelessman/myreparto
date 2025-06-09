@@ -89,6 +89,9 @@
     <script type="module" src="js/config/firebase.js"></script>
     <script type="module" src="js/app.js"></script>
     <script type="module">
+        import { auth, db } from './js/config/firebase.js';
+        import { showToast } from './js/utils/ui.js';
+
         document.addEventListener('DOMContentLoaded', () => {
             console.log('Script di registrazione caricato');
             
@@ -144,7 +147,28 @@
                     window.location.href = '/myreparto/dashboard';
                 } catch (error) {
                     console.error('Errore durante la registrazione:', error);
-                    showToast(error.message, 'error');
+                    let errorMessage = 'Errore durante la registrazione';
+                    
+                    // Gestione errori specifici
+                    switch (error.code) {
+                        case 'auth/email-already-in-use':
+                            errorMessage = 'Email già in uso';
+                            break;
+                        case 'auth/invalid-email':
+                            errorMessage = 'Email non valida';
+                            break;
+                        case 'auth/operation-not-allowed':
+                            errorMessage = 'Registrazione non abilitata';
+                            break;
+                        case 'auth/weak-password':
+                            errorMessage = 'Password troppo debole';
+                            break;
+                        case 'auth/network-request-failed':
+                            errorMessage = 'Errore di connessione';
+                            break;
+                    }
+                    
+                    showToast(errorMessage, 'error');
                 }
             });
         });
