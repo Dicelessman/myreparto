@@ -12,29 +12,29 @@ const routes = {
         auth: false
     },
     [`${BASE_PATH}/dashboard`]: {
-        template: '/views/dashboard',
+        template: '/views/dashboard.html',
         auth: true
     },
     [`${BASE_PATH}/login`]: {
-        template: '/views/login',
+        template: '/views/login.html',
         auth: false
     },
     [`${BASE_PATH}/register`]: {
-        template: '/views/register',
+        template: '/views/register.html',
         auth: false
     },
     [`${BASE_PATH}/esploratori`]: {
-        template: '/views/esploratori',
+        template: '/views/esploratori.html',
         auth: true,
         roles: ['staff']
     },
     [`${BASE_PATH}/esploratore/:id`]: {
-        template: '/views/esploratore-detail',
+        template: '/views/esploratore-detail.html',
         auth: true,
         roles: ['staff', 'esploratore']
     },
     [`${BASE_PATH}/profilo`]: {
-        template: '/views/profilo',
+        template: '/views/profilo.html',
         auth: true,
         roles: ['staff', 'esploratore']
     }
