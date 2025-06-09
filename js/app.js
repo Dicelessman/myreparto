@@ -11,6 +11,50 @@ const state = {
     isAuthenticated: false
 };
 
+// Definizione delle rotte
+const routes = [
+    {
+        path: '/myreparto',
+        template: '/myreparto/index.html',
+        auth: false
+    },
+    {
+        path: '/myreparto/index.html',
+        template: '/myreparto/index.html',
+        auth: false
+    },
+    {
+        path: '/myreparto/dashboard',
+        template: '/myreparto/dashboard.html',
+        auth: true
+    },
+    {
+        path: '/myreparto/login',
+        template: '/myreparto/login.html',
+        auth: false
+    },
+    {
+        path: '/myreparto/register',
+        template: '/myreparto/register.html',
+        auth: false
+    },
+    {
+        path: '/myreparto/esploratori',
+        template: '/myreparto/esploratori.html',
+        auth: true
+    },
+    {
+        path: '/myreparto/esploratore/:id',
+        template: '/myreparto/esploratore.html',
+        auth: true
+    },
+    {
+        path: '/myreparto/profilo',
+        template: '/myreparto/profilo.html',
+        auth: true
+    }
+];
+
 // Inizializzazione dell'applicazione
 async function initApp() {
     console.log('Inizializzazione applicazione...');

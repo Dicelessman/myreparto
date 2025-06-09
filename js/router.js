@@ -141,30 +141,35 @@ export const router = {
     matchRoute(path) {
         console.group('Match Route Debug');
         console.log('Percorso da matchare:', path);
-        console.log('Rotte disponibili:', Object.keys(routes));
-        
-        // Gestione dei parametri nelle rotte
-        const route = Object.entries(routes).find(([routePath]) => {
-            const pattern = routePath.replace(/:[^/]+/g, '[^/]+');
-            const matches = new RegExp(`^${pattern}$`).test(path);
-            console.log(`Confronto: ${path} con pattern ${pattern} => ${matches}`);
-            return matches;
-        });
+        console.log('Rotte disponibili:', routes);
 
-        if (!route) {
-            console.log('❌ Nessuna rotta trovata');
-            console.groupEnd();
-            return null;
+        // Rimuovi trailing slash per consistenza
+        path = path.replace(/\/$/, '');
+
+        for (const route of routes) {
+            const pattern = route.path;
+            console.log('Confronto:', path, 'con pattern', pattern);
+
+            // Gestione speciale per la rotta principale
+            if (pattern === '/myreparto' && (path === '/myreparto' || path === '/myreparto/')) {
+                console.log('✅ Rotta principale trovata');
+                return route;
+            }
+
+            // Converti il pattern in regex
+            const regexPattern = pattern
+                .replace(/:[^/]+/g, '[^/]+') // Sostituisci i parametri con regex
+                .replace(/\//g, '\\/'); // Escape forward slash
+
+            const regex = new RegExp(`^${regexPattern}$`);
+            if (regex.test(path)) {
+                console.log('✅ Rotta trovata:', pattern);
+                return route;
+            }
         }
 
-        console.log('✅ Rotta trovata:', route[0]);
-        console.groupEnd();
-        
-        // Per le rotte complesse, restituisci l'oggetto con i parametri
-        return { 
-            ...routes[route[0]], 
-            params: this.extractParams(route[0], path) 
-        };
+        console.log('❌ Nessuna rotta trovata');
+        return null;
     },
 
     extractParams(routePath, currentPath) {
