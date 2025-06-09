@@ -1,5 +1,5 @@
 import { auth } from './config/firebase.js';
-import { router } from './router.js';
+import Router from './router.js';
 import { showLoading, hideLoading } from './utils/ui.js';
 import { db } from './config/firebase.js';
 import { showToast } from './utils/ui.js';
@@ -60,6 +60,9 @@ async function initApp() {
     console.log('Inizializzazione applicazione...');
     showLoading();
     
+    // Inizializza il router
+    const router = new Router(routes);
+    
     // Listener per i cambiamenti di autenticazione
     auth.onAuthStateChanged(async (user) => {
         console.log('Stato autenticazione cambiato:', user ? 'utente autenticato' : 'utente non autenticato');
@@ -93,7 +96,7 @@ async function initApp() {
         // Naviga alla pagina corrente
         const currentPath = window.location.pathname;
         console.log('Navigazione alla pagina corrente:', currentPath);
-        await router.navigate(currentPath);
+        await router.handleRoute();
         hideLoading();
     });
 }

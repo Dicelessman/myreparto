@@ -40,113 +40,35 @@ const routes = {
     }
 };
 
-// Router
-export const router = {
-    async navigate(path) {
-        console.group('Router Debug');
-        console.log('=== INIZIO NAVIGAZIONE ===');
-        console.log('Percorso richiesto:', path);
-        console.log('URL corrente:', window.location.href);
-        console.log('Base URL:', window.location.origin);
-        console.log('Pathname:', window.location.pathname);
+class Router {
+    constructor(routes) {
+        this.routes = routes;
+        this.currentRoute = null;
+        this.baseUrl = 'https://dicelessman.github.io';
+        this.basePath = '/myreparto';
         
-        const route = this.matchRoute(path);
-        if (!route) {
-            console.error('❌ ROTTA NON TROVATA');
-            console.log('Rotte disponibili:', Object.keys(routes));
-            console.groupEnd();
-            return;
-        }
-        console.log('✅ ROTTA TROVATA:', route);
-
-        // Verifica autenticazione e ruoli
-        if (route.auth && !state.isAuthenticated) {
-            console.log('⚠️ Reindirizzamento al login - utente non autenticato');
-            console.groupEnd();
-            window.location.href = `${BASE_PATH}/login`;
-            return;
-        }
-
-        if (route.roles && !route.roles.includes(state.userRole)) {
-            console.log('⚠️ Reindirizzamento a unauthorized - ruolo non autorizzato');
-            console.groupEnd();
-            window.location.href = `${BASE_PATH}/unauthorized`;
-            return;
-        }
-
-        // Se è la pagina iniziale, non carichiamo nessun template
-        if (route.isHome) {
-            console.log('ℹ️ Pagina iniziale, nessun template da caricare');
-            console.groupEnd();
-            window.history.pushState({}, '', path);
-            return;
-        }
-
-        // Carica il template per le altre pagine
-        try {
-            // Costruisci il percorso del template
-            const templatePath = route.template;
-            console.log('=== TENTATIVO DI CARICAMENTO TEMPLATE ===');
-            console.log('Template path:', templatePath);
-            console.log('URL completo:', new URL(templatePath, window.location.href).href);
-            
-            const response = await fetch(templatePath);
-            console.log('Risposta fetch:', {
-                status: response.status,
-                statusText: response.statusText,
-                url: response.url
-            });
-            
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+        // Gestione della navigazione
+        window.addEventListener('popstate', () => this.handleRoute());
+        
+        // Gestione dei link
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('a[href^="/"]')) {
+                e.preventDefault();
+                this.navigate(e.target.getAttribute('href'));
             }
-            
-            const html = await response.text();
-            console.log('✅ Template caricato con successo');
-            console.log('Dimensione template:', html.length, 'bytes');
-            
-            document.getElementById('app').innerHTML = html;
-            
-            // Aggiorna l'URL
-            window.history.pushState({}, '', path);
-            console.log('URL aggiornato:', window.location.href);
-            
-            // Inizializza il controller della pagina
-            if (route.controller) {
-                console.log('Inizializzazione controller...');
-                route.controller();
-            }
-        } catch (error) {
-            console.error('❌ ERRORE NEL CARICAMENTO DELLA PAGINA');
-            console.error('Dettagli errore:', {
-                message: error.message,
-                stack: error.stack,
-                name: error.name
-            });
-            document.getElementById('app').innerHTML = `
-                <div class="p-4 text-red-500">
-                    <h2 class="text-xl font-bold mb-2">Errore nel caricamento della pagina</h2>
-                    <p>${error.message}</p>
-                    <pre class="mt-2 p-2 bg-gray-100 rounded text-sm">${error.stack}</pre>
-                    <a href="${BASE_PATH}/" class="text-green-600 hover:text-green-700 mt-4 inline-block">
-                        <i class="fas fa-home mr-2"></i>Torna alla home
-                    </a>
-                </div>
-            `;
-        }
-        console.log('=== FINE NAVIGAZIONE ===');
-        console.groupEnd();
-    },
+        });
+    }
 
+    // Funzione per matchare il percorso con le rotte disponibili
     matchRoute(path) {
-        console.group('Match Route Debug');
+        console.log('Match Route Debug');
         console.log('Percorso da matchare:', path);
-        console.log('Rotte disponibili:', routes);
+        console.log('Rotte disponibili:', this.routes);
 
         // Rimuovi trailing slash per consistenza
         path = path.replace(/\/$/, '');
 
-        for (const route of routes) {
+        for (const route of this.routes) {
             const pattern = route.path;
             console.log('Confronto:', path, 'con pattern', pattern);
 
@@ -170,24 +92,71 @@ export const router = {
 
         console.log('❌ Nessuna rotta trovata');
         return null;
-    },
-
-    extractParams(routePath, currentPath) {
-        const params = {};
-        const routeParts = routePath.split('/');
-        const pathParts = currentPath.split('/');
-
-        routeParts.forEach((part, index) => {
-            if (part.startsWith(':')) {
-                params[part.slice(1)] = pathParts[index];
-            }
-        });
-
-        return params;
     }
-};
 
-// Gestione della navigazione del browser
-window.addEventListener('popstate', () => {
-    router.navigate(window.location.pathname);
-}); 
+    async handleRoute() {
+        const path = window.location.pathname;
+        console.log('Router Debug');
+        console.log('=== INIZIO NAVIGAZIONE ===');
+        console.log('Percorso richiesto:', path);
+        console.log('URL corrente:', window.location.href);
+        console.log('Base URL:', this.baseUrl);
+        console.log('Pathname:', path);
+
+        const route = this.matchRoute(path);
+        
+        if (!route) {
+            console.log('❌ ROTTA NON TROVATA');
+            console.log('Rotte disponibili:', this.routes);
+            return;
+        }
+
+        console.log('✅ ROTTA TROVATA:', route);
+
+        // Verifica autenticazione se richiesta
+        if (route.auth && !appState.isAuthenticated) {
+            this.navigate('/myreparto/login');
+            return;
+        }
+
+        try {
+            console.log('=== TENTATIVO DI CARICAMENTO TEMPLATE ===');
+            console.log('Template path:', route.template);
+            const fullUrl = `${this.baseUrl}${route.template}`;
+            console.log('URL completo:', fullUrl);
+
+            const response = await fetch(fullUrl);
+            console.log('Risposta fetch:', response);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const template = await response.text();
+            console.log('✅ Template caricato con successo');
+            console.log('Dimensione template:', template.length, 'bytes');
+
+            // Aggiorna l'URL senza ricaricare la pagina
+            window.history.pushState({}, '', path);
+            console.log('URL aggiornato:', window.location.href);
+
+            // Aggiorna il contenuto
+            document.getElementById('app').innerHTML = template;
+
+            // Aggiorna lo stato corrente
+            this.currentRoute = route;
+
+            console.log('=== FINE NAVIGAZIONE ===');
+        } catch (error) {
+            console.error('Errore durante il caricamento del template:', error);
+        }
+    }
+
+    navigate(path) {
+        window.history.pushState({}, '', path);
+        this.handleRoute();
+    }
+}
+
+// Esporta la classe Router
+export default Router; 
