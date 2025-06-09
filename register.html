@@ -89,122 +89,17 @@
     <script type="module" src="js/config/firebase.js"></script>
     <script type="module" src="js/app.js"></script>
     <script type="module">
-        import { auth, db } from './js/config/firebase.js';
-        import { createUserWithEmailAndPassword, updateProfile } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
-        import { showToast } from './js/utils/ui.js';
-
-        // Funzione di inizializzazione
-        function initRegistration() {
-            console.log('Inizializzazione script di registrazione...');
-            
-            const registerForm = document.getElementById('registerForm');
-            const registerButton = document.getElementById('registerButton');
-            
-            if (!registerForm) {
-                console.error('Form di registrazione non trovato!');
-                return;
-            }
-
-            if (!registerButton) {
-                console.error('Pulsante di registrazione non trovato!');
-                return;
-            }
-
-            console.log('Form e pulsante trovati, aggiungo event listener...');
-            
-            // Rimuovi eventuali event listener precedenti
-            registerForm.removeEventListener('submit', handleSubmit);
-            registerButton.removeEventListener('click', handleSubmit);
-            
-            // Aggiungi i nuovi event listener
-            registerForm.addEventListener('submit', handleSubmit);
-            registerButton.addEventListener('click', handleSubmit);
-            
-            console.log('Event listener aggiunti con successo');
-        }
-
-        // Funzione di gestione del submit
-        async function handleSubmit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('Tentativo di registrazione...');
-            
-            const displayName = document.getElementById('displayName').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-
-            console.log('Dati form:', { displayName, email });
-
-            // Validazione password
-            if (password !== confirmPassword) {
-                showToast('Le password non coincidono', 'error');
-                return;
-            }
-
-            try {
-                console.log('Creazione utente in Firebase...');
-                // Creazione utente in Firebase Auth
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-                console.log('Utente creato:', user.uid);
-
-                // Aggiornamento del profilo
-                await updateProfile(user, {
-                    displayName: displayName
-                });
-                console.log('Profilo aggiornato');
-
-                // Creazione documento utente in Firestore
-                await db.collection('users').doc(user.uid).set({
-                    email: email,
-                    displayName: displayName,
-                    role: 'staff',
-                    createdAt: new Date(),
-                    isApproved: true // Il primo utente è automaticamente approvato
-                });
-                console.log('Documento utente creato in Firestore');
-
-                showToast('Registrazione completata con successo', 'success');
-                
-                // Redirect alla dashboard
-                window.location.href = '/myreparto/dashboard';
-            } catch (error) {
-                console.error('Errore durante la registrazione:', error);
-                let errorMessage = 'Errore durante la registrazione';
-                
-                // Gestione errori specifici
-                switch (error.code) {
-                    case 'auth/email-already-in-use':
-                        errorMessage = 'Email già in uso';
-                        break;
-                    case 'auth/invalid-email':
-                        errorMessage = 'Email non valida';
-                        break;
-                    case 'auth/operation-not-allowed':
-                        errorMessage = 'Registrazione non abilitata';
-                        break;
-                    case 'auth/weak-password':
-                        errorMessage = 'Password troppo debole';
-                        break;
-                    case 'auth/network-request-failed':
-                        errorMessage = 'Errore di connessione';
-                        break;
-                }
-                
-                showToast(errorMessage, 'error');
-            }
-        }
+        import { registerManager } from './js/auth/register.js';
 
         // Inizializza quando il DOM è caricato
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initRegistration);
+            document.addEventListener('DOMContentLoaded', () => registerManager.init());
         } else {
-            initRegistration();
+            registerManager.init();
         }
 
         // Inizializza anche quando il template viene caricato
-        document.addEventListener('templateLoaded', initRegistration);
+        document.addEventListener('templateLoaded', () => registerManager.init());
     </script>
 
     <!-- Service Worker Registration -->
