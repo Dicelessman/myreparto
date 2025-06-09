@@ -12,29 +12,29 @@ const routes = {
         auth: false
     },
     [`${BASE_PATH}/dashboard`]: {
-        template: '/views/dashboard.html',
+        template: `${BASE_PATH}/views/dashboard.html`,
         auth: true
     },
     [`${BASE_PATH}/login`]: {
-        template: '/views/login.html',
+        template: `${BASE_PATH}/views/login.html`,
         auth: false
     },
     [`${BASE_PATH}/register`]: {
-        template: '/register.html',
+        template: `${BASE_PATH}/register.html`,
         auth: false
     },
     [`${BASE_PATH}/esploratori`]: {
-        template: '/views/esploratori.html',
+        template: `${BASE_PATH}/views/esploratori.html`,
         auth: true,
         roles: ['staff']
     },
     [`${BASE_PATH}/esploratore/:id`]: {
-        template: '/views/esploratore-detail.html',
+        template: `${BASE_PATH}/views/esploratore-detail.html`,
         auth: true,
         roles: ['staff', 'esploratore']
     },
     [`${BASE_PATH}/profilo`]: {
-        template: '/views/profilo.html',
+        template: `${BASE_PATH}/views/profilo.html`,
         auth: true,
         roles: ['staff', 'esploratore']
     }
@@ -128,7 +128,7 @@ export const router = {
                     <h2 class="text-xl font-bold mb-2">Errore nel caricamento della pagina</h2>
                     <p>${error.message}</p>
                     <pre class="mt-2 p-2 bg-gray-100 rounded text-sm">${error.stack}</pre>
-                    <a href="/myreparto/" class="text-green-600 hover:text-green-700 mt-4 inline-block">
+                    <a href="${BASE_PATH}/" class="text-green-600 hover:text-green-700 mt-4 inline-block">
                         <i class="fas fa-home mr-2"></i>Torna alla home
                     </a>
                 </div>
