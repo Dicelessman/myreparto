@@ -126,8 +126,8 @@ class Router {
         if (!route) {
             console.log('❌ ROTTA NON TROVATA');
             console.log('Rotte disponibili:', this.routes);
-            // Reindirizza alla home
-            this.navigate('/myreparto');
+            // Reindirizza alla home senza ricorsione
+            window.history.replaceState({}, '', '/myreparto');
             return;
         }
 
@@ -135,7 +135,7 @@ class Router {
 
         // Verifica autenticazione se richiesta
         if (route.auth && !appState.isAuthenticated) {
-            this.navigate('/myreparto/login');
+            window.history.replaceState({}, '', '/myreparto/login');
             return;
         }
 
@@ -156,10 +156,6 @@ class Router {
             console.log('✅ Template caricato con successo');
             console.log('Dimensione template:', template.length, 'bytes');
 
-            // Aggiorna l'URL senza ricaricare la pagina
-            window.history.pushState({}, '', path);
-            console.log('URL aggiornato:', window.location.href);
-
             // Aggiorna il contenuto
             document.getElementById('app').innerHTML = template;
 
@@ -172,13 +168,14 @@ class Router {
             console.log('=== FINE NAVIGAZIONE ===');
         } catch (error) {
             console.error('Errore durante il caricamento del template:', error);
-            // In caso di errore, reindirizza alla home
-            this.navigate('/myreparto');
+            // In caso di errore, reindirizza alla home senza ricorsione
+            window.history.replaceState({}, '', '/myreparto');
         }
     }
 
     navigate(path) {
-        window.history.pushState({}, '', path);
+        // Usa replaceState invece di pushState per evitare il loop
+        window.history.replaceState({}, '', path);
         this.handleRoute();
     }
 }
