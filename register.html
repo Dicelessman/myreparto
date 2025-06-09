@@ -5,127 +5,154 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrazione - MyReparto</title>
     <link rel="stylesheet" href="css/output.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ffffff">
-    <meta name="mobile-web-app-capable" content="yes">
-    
-    <!-- iOS meta tags -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="MyReparto">
-    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
 </head>
 <body class="bg-gray-100">
-    <div id="app">
-        <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <div class="max-w-md w-full space-y-8">
-                <div>
-                    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        Registrazione
-                    </h2>
-                    <p class="mt-2 text-center text-sm text-gray-600">
-                        Crea il tuo account per accedere a MyReparto
-                    </p>
-                </div>
-                <form id="registerForm" class="mt-8 space-y-6">
-                    <div class="rounded-md shadow-sm -space-y-px">
-                        <div>
-                            <label for="displayName" class="sr-only">Nome e Cognome</label>
-                            <input id="displayName" name="displayName" type="text" required 
-                                   autocomplete="name"
-                                   class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" 
-                                   placeholder="Nome e Cognome">
-                        </div>
-                        <div>
-                            <label for="email" class="sr-only">Email</label>
-                            <input id="email" name="email" type="email" required 
-                                   autocomplete="email"
-                                   class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" 
-                                   placeholder="Email">
-                        </div>
-                        <div>
-                            <label for="password" class="sr-only">Password</label>
-                            <input id="password" name="password" type="password" required 
-                                   autocomplete="new-password"
-                                   class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" 
-                                   placeholder="Password">
-                        </div>
-                        <div>
-                            <label for="confirmPassword" class="sr-only">Conferma Password</label>
-                            <input id="confirmPassword" name="confirmPassword" type="password" required 
-                                   autocomplete="new-password"
-                                   class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" 
-                                   placeholder="Conferma Password">
-                        </div>
-                    </div>
-
-                    <div>
-                        <button type="button" id="registerButton"
-                                class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                                <svg class="h-5 w-5 text-green-500 group-hover:text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Registrati
-                        </button>
-                    </div>
-                </form>
-
-                <div class="text-center">
-                    <p class="text-sm text-gray-600">
-                        Hai già un account? 
-                        <a href="/myreparto/login" class="font-medium text-green-600 hover:text-green-500">
-                            Accedi
-                        </a>
-                    </p>
-                </div>
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                    Registrazione
+                </h2>
+                <p class="mt-2 text-center text-sm text-gray-600">
+                    Crea il tuo account per accedere a MyReparto
+                </p>
             </div>
+            <form id="registerForm" class="mt-8 space-y-6">
+                <div class="rounded-md shadow-sm -space-y-px">
+                    <div>
+                        <label for="displayName" class="sr-only">Nome e Cognome</label>
+                        <input id="displayName" name="displayName" type="text" required 
+                               autocomplete="name"
+                               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" 
+                               placeholder="Nome e Cognome">
+                    </div>
+                    <div>
+                        <label for="email" class="sr-only">Email</label>
+                        <input id="email" name="email" type="email" required 
+                               autocomplete="email"
+                               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" 
+                               placeholder="Email">
+                    </div>
+                    <div>
+                        <label for="password" class="sr-only">Password</label>
+                        <input id="password" name="password" type="password" required 
+                               autocomplete="new-password"
+                               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" 
+                               placeholder="Password">
+                    </div>
+                    <div>
+                        <label for="confirmPassword" class="sr-only">Conferma Password</label>
+                        <input id="confirmPassword" name="confirmPassword" type="password" required 
+                               autocomplete="new-password"
+                               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" 
+                               placeholder="Conferma Password">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="button" id="registerButton"
+                            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                            <svg class="h-5 w-5 text-green-500 group-hover:text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                        Registrati
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <!-- App Scripts -->
-    <script type="module" src="js/config/firebase.js"></script>
     <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/auth/register.js"></script>
     <script type="module">
-        console.log('Caricamento modulo di registrazione...');
-        
-        try {
-            const { registerManager } = await import('./js/auth/register.js');
-            console.log('Modulo di registrazione caricato con successo');
+        import { auth, db } from './js/config/firebase.js';
+        import { createUserWithEmailAndPassword, updateProfile } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+        import { showToast } from './js/utils/ui.js';
+
+        console.log('Inizializzazione script di registrazione...');
+
+        const registerForm = document.getElementById('registerForm');
+        const registerButton = document.getElementById('registerButton');
+
+        if (!registerForm || !registerButton) {
+            console.error('Elementi del form non trovati!');
+        } else {
+            console.log('Form e pulsante trovati, aggiungo event listener...');
             
-            function initRegistration() {
-                console.log('Tentativo di inizializzazione RegisterManager...');
-                registerManager.init();
-            }
+            registerButton.addEventListener('click', async (e) => {
+                e.preventDefault();
+                console.log('Tentativo di registrazione...');
 
-            // Inizializza quando il DOM è caricato
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initRegistration);
-            } else {
-                initRegistration();
-            }
+                const displayName = document.getElementById('displayName').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
 
-            // Inizializza anche quando il template viene caricato
-            document.addEventListener('templateLoaded', initRegistration);
-        } catch (error) {
-            console.error('Errore durante il caricamento del modulo di registrazione:', error);
-        }
-    </script>
+                console.log('Dati form:', { displayName, email });
 
-    <!-- Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registrato con successo:', registration.scope);
-                    })
-                    .catch(error => {
-                        console.log('Registrazione ServiceWorker fallita:', error);
+                if (password !== confirmPassword) {
+                    showToast('Le password non coincidono', 'error');
+                    return;
+                }
+
+                try {
+                    registerButton.disabled = true;
+                    registerButton.textContent = 'Registrazione in corso...';
+
+                    console.log('Creazione utente in Firebase...');
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+                    console.log('Utente creato:', user.uid);
+
+                    await updateProfile(user, { displayName });
+                    console.log('Profilo aggiornato');
+
+                    await db.collection('users').doc(user.uid).set({
+                        email,
+                        displayName,
+                        role: 'staff',
+                        createdAt: new Date(),
+                        isApproved: true
                     });
+                    console.log('Documento utente creato in Firestore');
+
+                    showToast('Registrazione completata con successo', 'success');
+                    window.location.href = '/myreparto/dashboard';
+
+                } catch (error) {
+                    console.error('Errore durante la registrazione:', error);
+                    let errorMessage = 'Errore durante la registrazione';
+                    
+                    switch (error.code) {
+                        case 'auth/email-already-in-use':
+                            errorMessage = 'Email già in uso';
+                            break;
+                        case 'auth/invalid-email':
+                            errorMessage = 'Email non valida';
+                            break;
+                        case 'auth/operation-not-allowed':
+                            errorMessage = 'Registrazione non abilitata';
+                            break;
+                        case 'auth/weak-password':
+                            errorMessage = 'Password troppo debole';
+                            break;
+                        case 'auth/network-request-failed':
+                            errorMessage = 'Errore di connessione';
+                            break;
+                    }
+                    
+                    showToast(errorMessage, 'error');
+                } finally {
+                    registerButton.disabled = false;
+                    registerButton.textContent = 'Registrati';
+                }
             });
+
+            console.log('Event listener aggiunto con successo');
         }
     </script>
 </body>
